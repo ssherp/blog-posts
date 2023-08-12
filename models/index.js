@@ -1,18 +1,41 @@
-// no many to many: all one to many relationships
-//user
-//users have many comments
-//users have many blogs
+const Comment = require('./Comment')
+const User = require('./User')
+const Blog = require('./Blog')
+
+// User can have many blog posts
+User.hasMany(Blog, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
+})
+
+// blog belongs to one user
+Blog.belongsTo(User, {
+    foreignKey: 'user_id'
+})
+
+// user can have many comments
+User.hasMany(Comment, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
+})
+
+// comment belongs to one user 
+Comment.belongsTo(User, {
+    foreignKey: 'user_id'
+})
+
+// Blog can have many comments
+Blog.hasMany(Comment, {
+    foreignKey: 'blog_id',
+    onDelete: 'CASCADE'
+})
+
+// comment belongs to one blog
+Comment.belongsTo(Blog, {
+    foreignKey: 'blog_id'
+})
 
 
-//blogs
-//blogs belong to one user
-//blogs can have many comments
-//will have foreign key that points to the users
-
-
-
-//comment 
-//comments belongs to one user
-//comment belong to one blog
-//will have foreign key for user
-//will have foreign key for blogs
+module.exports = {
+    Comment, User, Blog
+}
